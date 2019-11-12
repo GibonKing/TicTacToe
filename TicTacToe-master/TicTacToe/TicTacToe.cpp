@@ -94,36 +94,17 @@ TicTacToe::TicTacToe(const TicTacToe *parent, smallint move, smallint alpha, sma
 }
 
 void TicTacToe::search() {
-	if (turn == MAX) {
-		smallint max = -INF;
-		for (smallint p = 0; p < N_POS; ++p) {
-			if (s[p] == ZERO) {
-				// Go down the tree
-				children[p] = new TicTacToe(this, p, alpha, beta);
-				if (children[p]->get_v() > max) {
-					max = children[p]->get_v();
-					if (max > alpha && (alpha = max) >= beta)
-						break;
-				}
+	smallint max = -get_turn() * INF;
+	for (smallint p = 0; p < N_POS; ++p) {
+		if (s[p] == ZERO) {
+			// Go down the tree
+			children[p] = new TicTacToe(this, p, alpha, beta);
+			if (children[p]->get_v() * get_turn() > max * get_turn()) {
+				max = children[p]->get_v();
 			}
 		}
-		set_v(max);
 	}
-	else {
-		smallint min = +INF;
-		for (smallint p = 0; p < N_POS; ++p) {
-			if (s[p] == ZERO) {
-				// go down the tree
-				children[p] = new TicTacToe(this, p, alpha, beta);
-				if (children[p]->get_v() < min) {
-					min = children[p]->get_v();
-					if (min > alpha && (alpha = min) >= beta)
-						break;
-				}
-			}
-		}
-		set_v(min);
-	}
+	set_v(max);
 }
 
 TicTacToe::~TicTacToe() {

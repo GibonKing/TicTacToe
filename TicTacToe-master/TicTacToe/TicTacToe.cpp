@@ -79,12 +79,12 @@ TicTacToe::TicTacToe(const TicTacToe *parent, smallint move, smallint alpha, sma
 				++win_counter[depth];
 			else
 				++lose_counter[depth];
-			v = parent->turn * (10 - depth);
+			set_v(parent->turn * (10 - depth));
 		}
 		else {
 			// Draw
 			++draw_counter;
-			v = ZERO;
+			set_v(ZERO);
 		}
 	}
 	else {
@@ -107,7 +107,7 @@ void TicTacToe::search() {
 				}
 			}
 		}
-		v = max;
+		set_v(max);
 	}
 	else {
 		smallint min = +INF;
@@ -122,7 +122,7 @@ void TicTacToe::search() {
 				}
 			}
 		}
-		v = min;
+		set_v(min);
 	}
 }
 

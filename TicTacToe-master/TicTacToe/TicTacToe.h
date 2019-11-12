@@ -28,16 +28,6 @@ public:
     // Destroy the (sub)tree recursively
     ~TicTacToe();
 
-    // It is MAX's or MIN's turn.
-    // For empty board, turn is MAX.
-	const smallint turn;
-
-    // The latest move (0 ~ 8) that led to the current state
-    // (meaningless for root node)
-	const smallint move;
-
-    // Depth of the node in the tree (0 ~ 9)
-	const smallint depth;
 
     // Current MAX's payoff
     // (1) X wins
@@ -46,22 +36,17 @@ public:
     //     MIN * (10 - depth)
     // (3) Draw
     //     ZERO
-	smallint v;
 
 	smallint alpha, beta;
 
     // The stone at each board position is MAX, MIN, or ZERO.
     smallint s[N_POS];
 
-    // The previous TicTacToe state (parent node)
-    // For the empty board (root node), parent is nullptr
-    const TicTacToe *parent;
 
     // Array containing pointers to the child nodes, indexed by the move (0 ~ 8).
     // nullptr indicates a nonexistent (invalid) child node.
     TicTacToe *children[N_POS] = {};
 
-    TicTacToe *get_child(smallint move);
 
     // Check if the last player has just won the game
     bool is_win() const;
@@ -70,11 +55,21 @@ public:
     // This is called during construction if necessary.
     void search();
 
-	smallint get_v() {
-		return v;
-	}
+	smallint get_v() {return v;}
+	void set_v(smallint V) { v = V; }
+	const TicTacToe* get_parent() {return parent;}
+    TicTacToe* get_child(smallint move);
+	const smallint get_turn(){return turn;}
+	const smallint get_move(){return move;}
+	const smallint get_depth(){ return depth;}
 
 private:
+	smallint v;
+	const TicTacToe *parent;	// The previous TicTacToe state (parent node) For the empty board (root node), parent is nullptr
+	const smallint turn;		// It is MAX's or MIN's turn. For empty board, turn is MAX.
+	const smallint move;		// The latest move (0 ~ 8) that led to the current state (meaningless for root node)
+	const smallint depth;		// Depth of the node in the tree (0 ~ 9)
+
     // Construct a non-root node and its descendants,
     // given its parent node and the move (0 ~ 8) from the parent state to the current state
     TicTacToe(const TicTacToe *parent, smallint move, smallint alpha, smallint beta);

@@ -68,9 +68,14 @@ bool play(TicTacToe *it) {
             // Human move
             cout << "Your move: " << flush;
             for (;;) {
-                cin >> move;
+
+				do {
+					move = rand() % 10;
+				} while (it->s[move] != TicTacToe::ZERO);
+				cout << move;
+
                 if (0 <= move && move < TicTacToe::N_POS &&
-                        it->s[move] == TicTacToe::ZERO)
+                        it->s[move] == TicTacToe::ZERO)					
                     break;
                 cout << "Invalid move!" << endl;
                 if (!cin) {

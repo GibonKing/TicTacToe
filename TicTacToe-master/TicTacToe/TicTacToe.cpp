@@ -102,8 +102,6 @@ void TicTacToe::search() {
 				children[p] = new TicTacToe(this, p, alpha, beta);
 				if (children[p]->get_v() > max) {
 					max = children[p]->get_v();
-					if (max > alpha && (alpha = max) >= beta)
-						break;
 				}
 			}
 		}
@@ -117,8 +115,6 @@ void TicTacToe::search() {
 				children[p] = new TicTacToe(this, p, alpha, beta);
 				if (children[p]->get_v() < min) {
 					min = children[p]->get_v();
-					if (min < beta && (beta = min) <= alpha)
-						break;
 				}
 			}
 		}

@@ -94,11 +94,11 @@ bool play(TicTacToe *it) {
 				}
 			} else if (human == TicTacToe::MIN) {
 				// If Human is MAX
-				TicTacToe::smallint max = TicTacToe::INF;
+				TicTacToe::smallint max = -TicTacToe::INF;
 				for (TicTacToe::smallint p = 0; p < TicTacToe::N_POS; ++p) {
 					if (it->s[p] == TicTacToe::ZERO) {
 						TicTacToe *child = it->get_child(p);
-						if (child->get_v() < max) {
+						if (child->get_v() > max) {
 							max = child->get_v();
 							move = p;
 						}

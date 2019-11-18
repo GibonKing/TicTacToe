@@ -57,19 +57,24 @@ bool TicTacToe::is_win() const {
 }
 
 TicTacToe::TicTacToe():
-        turn(MAX), move(-1), depth(0), alpha(-INF), beta(+INF), s(), parent(nullptr) {
+        turn(MAX), move(-1), depth(0), maxDepth(3), alpha(-INF), beta(+INF), s(), parent(nullptr) {
     ++node_counter;
     search();
 }
 
 TicTacToe::TicTacToe(const TicTacToe *parent, smallint move, smallint alpha, smallint beta):
-        turn(-parent->turn), move(move), depth(parent->depth + 1),
+        turn(-parent->turn), move(move), depth(parent->depth + 1), maxDepth(parent->maxDepth + 1),
         alpha(alpha), beta(beta), parent(parent) {
 	++node_counter;
 	std::copy(std::begin(parent->s), std::end(parent->s), s);
 	s[move] = parent->turn;
-	bool iswin = is_win(),
+	bool iswin = is_win(), isfull;
+
+	if (maxDepth < N_POS)
+		isfull = depth == maxDepth;
+	else
 		isfull = depth == N_POS;
+
 	if (iswin || isfull) {
 		// Game just ended.
 		++leaf_counter;

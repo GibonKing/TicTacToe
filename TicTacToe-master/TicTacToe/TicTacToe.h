@@ -62,6 +62,7 @@ public:
 	const smallint get_turn(){return turn;}
 	const smallint get_move(){return move;}
 	const smallint get_depth(){ return depth;}
+	const smallint get_maxDepth() { return maxDepth; }
 
 private:
 	smallint v;
@@ -69,6 +70,7 @@ private:
 	const smallint turn;		// It is MAX's or MIN's turn. For empty board, turn is MAX.
 	const smallint move;		// The latest move (0 ~ 8) that led to the current state (meaningless for root node)
 	const smallint depth;		// Depth of the node in the tree (0 ~ 9)
+	const smallint maxDepth;			// The number of turns it will look ahead
 
     // Construct a non-root node and its descendants,
     // given its parent node and the move (0 ~ 8) from the parent state to the current state
